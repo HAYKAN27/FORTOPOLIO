@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 dark:text-white">
+                Portofolio <span class="text-blue-600 dark:text-blue-400">Proyek</span>
+            </h2>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+                Bukti nyata kemampuan saya dalam membangun solusi digital
+            </p>
+            
+            <!-- Project Grid - akan diisi dengan JavaScript -->
+            <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Projects will be rendered here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 5️⃣ Experience -->
+    <section id="experience" class="py-20 transition-colors duration-300" data-aos="fade-up">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 dark:text-white">Pengalaman <span
+                    class="text-blue-600 dark:text-blue-400">&</span> Pendidikan</h2>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-8 dark:text-white flex items-center">
+                        <i class="fas fa-briefcase mr-3 text-blue-600 dark:text-blue-400"></i>Pengalaman Kerja
+                    </h3>
+
+                    <!-- Experience Timeline -->
+                    <div class="space-y-8">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                            <h4 class="text-xl font-bold dark:text-white">Freelance Web Developer</h4>
+                            <p class="text-blue-600 dark:text-blue-400 font-medium mb-2">Self-Employed • 2022 - Sekarang
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                Membangun website untuk berbagai klien UMKM dan startup.
+                            </p>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                            <h4 class="text-xl font-bold dark:text-white">Magang SOFTWARE PROGRAMMER</h4>
+                            <p class="text-blue-600 dark:text-blue-400 font-medium mb-2">PT. BITMAKER AUTOMATION • Jan - April
+                                2025</p>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                Mengembangkan komponen UI website peminjaman mobil untuk karyawan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-8 dark:text-white flex items-center">
+                        <i class="fas fa-graduation-cap mr-3 text-blue-600 dark:text-blue-400"></i>Pendidikan
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                            <h4 class="text-xl font-bold dark:text-white">PENGEMBANGAN PERANGKAT LUNAK DAN GIM</h4>
+                            <p class="text-blue-600 dark:text-blue-400 font-medium mb-2">
+                                SMK TI MUHAMMADIYAH CIKAMPEK
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                IPK: 3.75/4.00
+                            </p>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+                            <h4 class="text-xl font-bold dark:text-white">S1 TEKNIK INFORMATIKA</h4>
+                            <p class="text-blue-600 dark:text-blue-400 font-medium mb-2">INSTITUT TEKNOLOGI SEPULUH NOVEMBER</p>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                IPK 3.85/4.00
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <script>
+        // Data Array Projects
+        const projects = [
+            {
+                id: 1,
+                title: "Cemal - Cemil",
+                description: "Website usaha dengan sistem pemesanan online untuk UMKM kuliner.",
+                gradient: "from-orange-500 to-red-600",
+                image: "./img/project.png",
+                icon: null,
+                technologies: [
+                    { name: "EJS", color: "blue" },
+                    { name: "Tailwind", color: "blue" },
+                    { name: "Mysql", color: "yellow" },
+                    { name: "Express", color: "green" }
+                ],
+                liveDemo: "#",
+                github: "#"
+            },
+            {
+                id: 2,
+                title: "KuPinjam",
+                description: "Platform Peminjaman mobil untuk karyawan PT lengkap dengan sistem dan pencatatan Otomatis.",
+                gradient: "from-blue-500 to-purple-600",
+                image: "./img/project2.png",
+                icon: "fas fa-shopping-cart",
+                technologies: [
+                    { name: "Laravel", color: "blue" },
+                    { name: "Tailwind", color: "blue" },
+                    { name: "Node.js", color: "green" },
+                    { name: "MongoDB", color: "green" }
+                ],
+                liveDemo: "#",
+                github: "#"
+            },
+            {
+                id: 3,
+                title: "MUTU Bazaar",
+                description: "Platform Digital Bazaar MUTU ",
+                gradient: "from-green-500 to-teal-600",
+                image: null,
+                icon: "fas fa-building",
+                technologies: [
+                    { name: "NextJS", color: "blue" },
+                    { name: "Tailwind", color: "blue" },
+                    { name: "TypeScript", color: "yellow" },
+                    { name: "MongoDB", color: "purple" }
+                ],
+                liveDemo: "#",
+                github: "#"
+            }
+        ];
+
+        // Helper function untuk mendapatkan class warna badge
+        function getBadgeColorClass(color) {
+            const colorMap = {
+                blue: "bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200",
+                yellow: "bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200",
+                green: "bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200",
+                purple: "bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200"
+            };
+            return colorMap[color] || colorMap.blue;
+        }
+
+        // Function untuk render projects
+        function renderProjects() {
+            const projectGrid = document.getElementById('projectGrid');
+            
+            projectGrid.innerHTML = projects.map(project => `
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-3 transition duration-300">
+                    <div class="h-48 bg-gradient-to-r ${project.gradient} flex items-center justify-center">
+                        ${project.image 
+                            ? `<img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover">` 
+                            : `<i class="${project.icon} text-white text-6xl"></i>`
+                        }
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 dark:text-white">${project.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            ${project.description}
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            ${project.technologies.map(tech => `
+                                <span class="px-3 py-1 ${getBadgeColorClass(tech.color)} text-sm rounded-full">
+                                    ${tech.name}
+                                </span>
+                            `).join('')}
+                        </div>
+                        <div class="flex justify-between">
+                            <a href="${project.liveDemo}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="${project.github}" class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition flex items-center">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render projects saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', renderProjects);
+    </script>
+</body>
+
+</html>

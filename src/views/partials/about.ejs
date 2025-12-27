@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+        
+        .gallery-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+        
+        .gallery-item:hover .gallery-content {
+            transform: translateY(0);
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50%, 50%); }
+        }
+        
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+        
+        .lightbox.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            animation: zoomIn 0.3s ease;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .category-badge {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 2️⃣ About Me -->
+    <section id="about" class="py-20 bg-gray-100 dark:bg-gray-800 transition-colors duration-300" data-aos="fade-up">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 dark:text-white">Tentang <span class="text-blue-600 dark:text-blue-400">Saya</span></h2>
+            <div class="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 md:p-12 transition-colors duration-300">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-2/3 md:pr-10">
+                        <p class="text-lg mb-6 dark:text-gray-300">
+                            Saya adalah <span class="font-semibold text-blue-600 dark:text-blue-400">Web Developer</span> dengan fokus membangun website UMKM dengan performa cepat dan desain modern. 
+                            Dengan pengalaman 2+ tahun, saya telah membantu berbagai bisnis meningkatkan kehadiran digital mereka.
+                        </p>
+                        <p class="text-lg mb-6 dark:text-gray-300">
+                            Saya percaya bahwa website bukan hanya tentang tampilan, tetapi juga tentang pengalaman pengguna, 
+                            kecepatan, dan fungsionalitas yang mendukung tujuan bisnis.
+                        </p>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-4 dark:text-white">Soft Skills:</h3>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded-full">Komunikasi Efektif</span>
+                                <span class="px-4 py-2 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 rounded-full">Problem Solving</span>
+                                <span class="px-4 py-2 bg-purple-100 dark:bg-purple-800 text-purple-800 dark:text-purple-200 rounded-full">Teamwork</span>
+                                <span class="px-4 py-2 bg-yellow-100 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 rounded-full">Manajemen Waktu</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/3 mt-8 md:mt-0">
+                        <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl transition-colors duration-300">
+                            <h3 class="text-xl font-semibold mb-4 dark:text-white">Background:</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-graduation-cap text-blue-600 dark:text-blue-400 mt-1 mr-3"></i>
+                                    <span class="dark:text-gray-300">SMK TI MUHAMMADIYAH CIKAMPEK   </span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-briefcase text-blue-600 dark:text-blue-400 mt-1 mr-3"></i>
+                                    <span class="dark:text-gray-300">Freelance Web Developer</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-certificate text-blue-600 dark:text-blue-400 mt-1 mr-3"></i>
+                                    <span class="dark:text-gray-300">Bootcamp Fullstack Developer</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Gallery Section -->
+    <section id="gallery" class="py-24 relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <span class="inline-block px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-sm font-semibold mb-4">
+                    PORTFOLIO GALLERY
+                </span>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 dark:text-white">
+                    Galeri <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Profesional</span>
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Kumpulan momen dan karya terbaik dalam perjalanan pendidkan saya
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all active" data-filter="all">
+                    <i class="fas fa-th mr-2"></i>Semua
+                </button>
+                <button class="filter-btn px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700" data-filter="workspace">
+                    <i class="fas fa-laptop-code mr-2"></i>Workspace
+                </button>
+                <button class="filter-btn px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700" data-filter="team">
+                    <i class="fas fa-users mr-2"></i>Team
+                </button>
+                <button class="filter-btn px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700" data-filter="events">
+                    <i class="fas fa-calendar-alt mr-2"></i>Events
+                </button>
+                <button class="filter-btn px-6 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:shadow-lg transition-all border border-gray-200 dark:border-gray-700" data-filter="projects">
+                    <i class="fas fa-project-diagram mr-2"></i>Projects
+                </button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="max-w-7xl mx-auto">
+                <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Gallery items will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <script>
+             const galleryData = [
+            {
+                id: 1,
+                title: "Kidi IOT",
+                description: "Tempat dimana ide-ide kreatif lahir dan berkembang",
+                category: "workspace",
+                gradient: "from-blue-500 to-cyan-500",
+                icon: "fas fa-laptop-code",
+                date: "2024"
+            },
+            {
+                id: 2,
+                title: "Kupinjam",
+                description: "Bekerja sama menciptakan solusi terbaik",
+                category: "team",
+                gradient: "from-purple-500 to-indigo-600",
+                icon: "fas fa-users",
+                date: "2024"
+            },
+            {
+                id: 3,
+                title: "Mutu Bazaar 2025",
+                description: "Networking dengan developer professionals",
+                category: "events",
+                gradient: "from-green-500 to-teal-600",
+                icon: "fas fa-calendar-check",
+                date: "2024"
+            },
+            {
+                id: 4,
+                title: "E-Commerce Platform",
+                description: "Full-stack development untuk startup",
+                category: "projects",
+                gradient: "from-pink-500 to-rose-600",
+                icon: "fas fa-shopping-cart",
+                date: "2024"
+            },
+            {
+                id: 5,
+                title: "Code Review Meeting",
+                description: "Ensuring code quality and best practices",
+                category: "team",
+                gradient: "from-yellow-500 to-orange-600",
+                icon: "fas fa-code-branch",
+                date: "2024"
+            },
+            {
+                id: 6,
+                title: "Achievement & Awards",
+                description: "Recognition for outstanding work",
+                category: "events",
+                gradient: "from-red-500 to-pink-600",
+                icon: "fas fa-award",
+                date: "2024"
+            },
+            {
+                id: 7,
+                title: "Development Environment",
+                description: "Tools and setup untuk produktivitas maksimal",
+                category: "workspace",
+                gradient: "from-indigo-500 to-purple-600",
+                icon: "fas fa-desktop",
+                date: "2024"
+            },
+            {
+                id: 8,
+                title: "Mobile App Development",
+                description: "Cross-platform mobile solution",
+                category: "projects",
+                gradient: "from-teal-500 to-green-600",
+                icon: "fas fa-mobile-alt",
+                date: "2024"
+            },
+            {
+                id: 9,
+                title: "Workshop & Training",
+                description: "Sharing knowledge dengan komunitas",
+                category: "events",
+                gradient: "from-orange-500 to-red-600",
+                icon: "fas fa-chalkboard-teacher",
+                date: "2024"
+            },
+            {
+                id: 10,
+                title: "Brainstorming Session",
+                description: "Ideation untuk project baru",
+                category: "team",
+                gradient: "from-cyan-500 to-blue-600",
+                icon: "fas fa-lightbulb",
+                date: "2023"
+            },
+            {
+                id: 11,
+                title: "Dashboard Analytics",
+                description: "Data visualization project",
+                category: "projects",
+                gradient: "from-violet-500 to-purple-600",
+                icon: "fas fa-chart-line",
+                date: "2023"
+            },
+            {
+                id: 12,
+                title: "Creative Workspace",
+                description: "Inspirasi dari environment sekitar",
+                category: "workspace",
+                gradient: "from-fuchsia-500 to-pink-600",
+                icon: "fas fa-paint-brush",
+                date: "2023"
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentImageIndex = 0;
+
+        // Render Gallery
+        function renderGallery(filter = 'all') {
+            const grid = document.getElementById('galleryGrid');
+            const filtered = filter === 'all' ? galleryData : galleryData.filter(item => item.category === filter);
+            
+            grid.innerHTML = filtered.map((item, index) => `
+                <div class="gallery-item rounded-2xl shadow-xl cursor-pointer bg-gray-900 group" data-index="${index}" data-category="${item.category}">
+                    <div class="image-placeholder aspect-[4/3] bg-gradient-to-br ${item.gradient} flex items-center justify-center relative">
+                        <i class="${item.icon} text-7xl text-white/30"></i>
+                        <div class="absolute top-4 right-4">
+                            <span class="category-badge px-3 py-1 text-white text-xs font-semibold rounded-full">
+                                ${item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="gallery-content text-white">
+                        <div class="flex items-center text-xs text-gray-300 mb-2">
+                            <i class="far fa-calendar mr-2"></i>${item.date}
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">${item.title}</h4>
+                        <p class="text-sm text-gray-300 mb-4">${item.description}</p>
+                        <div class="flex items-center justify-between">
+                            <button class="px-4 py-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg text-sm font-semibold transition">
+                                <i class="fas fa-eye mr-2"></i>View
+                            </button>
+                            <div class="flex gap-2">
+                                <button class="w-10 h-10 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition flex items-center justify-center">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="w-10 h-10 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-lg transition flex items-center justify-center">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click events
+            document.querySelectorAll('.gallery-item').forEach((item, idx) => {
+                item.addEventListener('click', () => openLightbox(idx));
+            });
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-gradient-to-r', 'from-purple-600', 'to-pink-600', 'text-white');
+                    b.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border', 'border-gray-200', 'dark:border-gray-700');
+                });
+                
+                this.classList.add('active', 'bg-gradient-to-r', 'from-purple-600', 'to-pink-600', 'text-white');
+                this.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border', 'border-gray-200', 'dark:border-gray-700');
+                
+                // Filter gallery
+                const filter = this.dataset.filter;
+                currentFilter = filter;
+                renderGallery(filter);
+            });
+        });
+
+        // Lightbox functionality
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const item = galleryData[index];
+            const lightbox = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+            
+            content.innerHTML = `
+                <div class="bg-gray-900 rounded-2xl overflow-hidden max-w-4xl">
+                    <div class="image-placeholder aspect-video bg-gradient-to-br ${item.gradient} flex items-center justify-center">
+                        <i class="${item.icon} text-9xl text-white/30"></i>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full">
+                                ${item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+                            </span>
+                            <span class="text-gray-400 text-sm">
+                                <i class="far fa-calendar mr-2"></i>${item.date}
+                            </span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">${item.title}</h3>
+                        <p class="text-gray-300 text-lg">${item.description}</p>
+                    </div>
+                </div>
+            `;
+            
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function nextImage() {
+            const filtered = currentFilter === 'all' ? galleryData : galleryData.filter(item => item.category === currentFilter);
+            currentImageIndex = (currentImageIndex + 1) % filtered.length;
+            openLightbox(currentImageIndex);
+        }
+
+        function prevImage() {
+            const filtered = currentFilter === 'all' ? galleryData : galleryData.filter(item => item.category === currentFilter);
+            currentImageIndex = (currentImageIndex - 1 + filtered.length) % filtered.length;
+            openLightbox(currentImageIndex);
+        }
+
+        // Event listeners
+        document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+        document.getElementById('nextImage').addEventListener('click', nextImage);
+        document.getElementById('prevImage').addEventListener('click', prevImage);
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        });
+
+        // Initial render
+        renderGallery();
+    </script>
+
+    
+</body>
+</html>,
