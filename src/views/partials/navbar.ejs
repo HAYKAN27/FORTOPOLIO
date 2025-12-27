@@ -1,66 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=\, initial-scale=1.0">
     <title>Document</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <style>
         html {
             scroll-behavior: smooth;
         }
+
         .skill-progress {
             transition: width 1.5s ease-in-out;
         }
+
+        /* Animasi untuk mobile menu */
+        .mobile-menu-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .mobile-menu-slide {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu-slide.open {
+            transform: translateX(0);
+        }
+
+        /* Animasi untuk menu items */
+        .menu-item {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-slide.open .menu-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger delay untuk menu items */
+        .menu-item:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .menu-item:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .menu-item:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .menu-item:nth-child(4) {
+            transition-delay: 0.25s;
+        }
+
+        .menu-item:nth-child(5) {
+            transition-delay: 0.3s;
+        }
+
+        .menu-item:nth-child(6) {
+            transition-delay: 0.35s;
+        }
+
+        /* Smooth dark mode transition */
+        body,
+        nav,
+        button {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
     </style>
 </head>
+
 <body>
     <!-- Dark Mode Toggle FIXED -->
-    <button id="darkModeToggle" class="fixed top-2 right-20 md:right-6 z-50 p-3 rounded-full bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800 shadow-lg hover:scale-110 transition-transform">
+    <button id="darkModeToggle"
+        class="fixed top-2 right-20 md:right-6 z-50 p-3 rounded-full bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800 shadow-lg hover:scale-110 transition-transform">
         <i class="fas fa-moon" id="darkIcon"></i>
     </button>
 
     <!-- Navbar -->
-    <nav class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-40 shadow-sm transition-colors duration-300">
+    <nav
+        class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-40 shadow-sm transition-colors duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            
+
             <a href="#" class="flex d-flex gap-2 text-2xl font-bold text-blue-600 dark:text-blue-400">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-code text-white text-xl"></i>
-                    </div>
+                <div
+                    class="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-code text-white text-xl"></i>
+                </div>
                 <span class="text-white">
                     Portfolio.
                 </span>
-                MHS</a>
+                MHS
+            </a>
             <div class="hidden md:flex space-x-8">
-                <a href="#home" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Home</a>
-                <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Tentang</a>
-                <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Skills</a>
-                <a href="#portfolio" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Portofolio</a>
-                <a href="#experience" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Pengalaman</a>
-                <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Kontak</a>
+                <a href="#home"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Home</a>
+                <a href="#about"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Tentang</a>
+                <a href="#skills"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Skills</a>
+                <a href="#portfolio"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Portofolio</a>
+                <a href="#experience"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Pengalaman</a>
+                <a href="#contact"
+                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Kontak</a>
             </div>
-            <button id="mobileMenuButton" class="md:hidden text-gray-700 dark:text-gray-300">
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton"
+                class="md:hidden text-gray-700 dark:text-gray-300 hover:scale-110 transition-transform duration-300">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-lg py-4 px-6 space-y-4 transition-all duration-300">
-            <a href="#home" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Home</a>
-            <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Tentang</a>
-            <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Skills</a>
-            <a href="#portfolio" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Portofolio</a>
-            <a href="#experience" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Pengalaman</a>
-            <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 py-2">Kontak</a>
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay & Slide Menu -->
+    <div id="mobileMenuOverlay"
+        class="mobile-menu-overlay fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300">
+        <!-- Overlay untuk menutup menu -->
+        <div class="absolute inset-0 bg-black/50" id="closeMenuOverlay"></div>
+
+        <!-- Menu Slide dari Kanan -->
+        <div class="mobile-menu-slide absolute right-0 top-0 h-full w-64 bg-white dark:bg-gray-900">
+            <!-- Header Menu Mobile -->
+            <div class="flex items-center justify-between p-6 border-b dark:border-gray-700">
+                <h2 class="text-xl font-bold text-blue-600 dark:text-blue-400">Menu</h2>
+                <button id="closeMobileMenu"
+                    class="text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-300">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="p-6 space-y-6">
+                <a href="#home"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-home w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Home</span>
+                </a>
+
+                <a href="#about"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-user w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Tentang</span>
+                </a>
+
+                <a href="#skills"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-code w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Skills</span>
+                </a>
+
+                <a href="#portfolio"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-briefcase w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Portofolio</span>
+                </a>
+
+                <a href="#experience"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-chart-line w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Pengalaman</span>
+                </a>
+
+                <a href="#contact"
+                    class="menu-item flex items-center space-x-3 text-lg hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group">
+                    <i
+                        class="fas fa-envelope w-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300"></i>
+                    <span>Kontak</span>
+                </a>
+            </div>
+
+            <!-- Footer Menu Mobile -->
+            <div class="absolute bottom-0 left-0 right-0 p-6 border-t dark:border-gray-700">
+                <div class="flex justify-center space-x-4">
+                    <a href="#"
+                        class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#"
+                        class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#"
+                        class="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </nav>
     <!-- JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -71,17 +219,15 @@
             offset: 100
         });
 
-        // Dark Mode Toggle - FIXED VERSION
+        // Dark Mode Toggle
         const darkModeToggle = document.getElementById('darkModeToggle');
         const darkIcon = document.getElementById('darkIcon');
         const htmlElement = document.documentElement;
 
-        // Check for saved dark mode preference
+        // Check for saved theme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             enableDarkMode();
-        } else {
-            disableDarkMode();
         }
 
         darkModeToggle.addEventListener('click', () => {
@@ -106,30 +252,75 @@
             localStorage.setItem('theme', 'light');
         }
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Pesan berhasil dikirim! Saya akan membalas dalam 1-2 jam kerja.');
-            this.reset();
-        });
-
-        // Mobile menu toggle
+        // Mobile Menu Functionality with Smooth Animation
         const mobileMenuButton = document.getElementById('mobileMenuButton');
-        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const closeMenuOverlay = document.getElementById('closeMenuOverlay');
+        const mobileMenuSlide = mobileMenuOverlay.querySelector('.mobile-menu-slide');
 
+        // Open mobile menu
         mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            openMobileMenu();
         });
 
-        // Close mobile menu when clicking a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
+        // Close mobile menu with close button
+        closeMobileMenu.addEventListener('click', () => {
+            closeMobileMenuFunc();
+        });
+
+        // Close mobile menu with overlay click
+        closeMenuOverlay.addEventListener('click', () => {
+            closeMobileMenuFunc();
+        });
+
+        // Close mobile menu with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenuOverlay.classList.contains('hidden')) {
+                closeMobileMenuFunc();
+            }
+        });
+
+        // Close menu when clicking on menu links
+        mobileMenuOverlay.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+                // Delay closing to allow smooth transition
+                setTimeout(() => {
+                    closeMobileMenuFunc();
+                }, 300);
             });
         });
 
-        // Animate skill bars on scroll
+        function openMobileMenu() {
+            // Show overlay
+            mobileMenuOverlay.classList.remove('hidden');
+
+            // Trigger reflow to enable transition
+            void mobileMenuOverlay.offsetWidth;
+
+            // Add open classes with delay for smooth animation
+            setTimeout(() => {
+                mobileMenuOverlay.classList.remove('opacity-0');
+                mobileMenuSlide.classList.add('open');
+            }, 10);
+
+            // Disable body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenuFunc() {
+            // Remove open classes
+            mobileMenuSlide.classList.remove('open');
+            mobileMenuOverlay.classList.add('opacity-0');
+
+            // Hide overlay after transition
+            setTimeout(() => {
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 400); // Match this with CSS transition duration
+        }
+
+        // Animate skill bars on scroll (jika ada section skills)
         const observerOptions = {
             threshold: 0.5
         };
@@ -149,7 +340,12 @@
             });
         }, observerOptions);
 
-        observer.observe(document.getElementById('skills'));
-    </script>   
+        // Observe skills section if exists
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
 </body>
+
 </html>
