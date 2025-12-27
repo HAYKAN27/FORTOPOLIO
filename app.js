@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // route
 app.get("/", (req, res) => {
-  res.render("main"); // TANPA .ejs
+  res.render("main");
 });
 
 app.listen(3000, () => {
